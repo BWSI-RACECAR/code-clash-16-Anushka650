@@ -54,27 +54,35 @@ and form a loop after the 4th execution. Figure out why it's after the 4th execu
     """
 class Solution:
     def isracecarbounded(self, instructions):
-        x, y = 0, 0
-        direction = 0
+        initial_pos = [0, 0]
+        cur_pos = [0, 0]
+        direction = ['S', 'W', 'N', 'E']  # ['S':0, 'W':1, 'N':2, 'E':3] Reference for cur_dir (current direction)
+        cur_dir = 2  # 0: South, 1: West, 2: North, 3: East
 
-        for i in range(4):
+        # Perform the instructions in a loop
+        for _ in range(4):  # We only need to check up to 4 executions
             for instr in instructions:
                 if instr == 'G':
-                    if direction == 0:
-                        y += 1
-                    elif direction == 1:
-                        x += 1
-                    elif direction == 2:
-                        y -= 1
-                    else:
-                        x -= 1
+                    # Move the racecar one step in the current direction
+                    if cur_dir == 0:  # South
+                        cur_pos[1] -= 1
+                    elif cur_dir == 1:  # West
+                        cur_pos[0] -= 1
+                    elif cur_dir == 2:  # North
+                        cur_pos[1] += 1
+                    else:  # East
+                        cur_pos[0] += 1
                 elif instr == 'L':
-                    direction = (direction - 1) % 4
+                    # Turn the racecar 90 degrees to the left
+                    cur_dir = (cur_dir - 1) % 4
                 elif instr == 'R':
-                    direction = (direction + 1) % 4
+                    # Turn the racecar 90 degrees to the right
+                    cur_dir = (cur_dir + 1) % 4
 
-            if x == 0 and y == 0 and direction == 0:
+            # Check if the racecar has returned to the starting point
+            if cur_pos[0] == initial_pos[0] and cur_pos[1] == initial_pos[1] and cur_dir == 2:
                 return True
+
         return False
 
             #type instructions: string
@@ -95,5 +103,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
 
 
