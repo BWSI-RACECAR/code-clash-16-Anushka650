@@ -56,30 +56,23 @@ class Solution:
     def isracecarbounded(self, instructions):
         initial_pos = [0, 0]
         cur_pos = [0, 0]
-        direction = ['S', 'W', 'N', 'E']  # ['S':0, 'W':1, 'N':2, 'E':3] Reference for cur_dir (current direction)
-        cur_dir = 2  # 0: South, 1: West, 2: North, 3: East
-
-        # Perform the instructions in a loop
-        for _ in range(4):  # We only need to check up to 4 executions
+        direction = ['S', 'W', 'N', 'E']
+        cur_dir = 2
+        for _ in range(4):
             for instr in instructions:
                 if instr == 'G':
-                    # Move the racecar one step in the current direction
-                    if cur_dir == 0:  # South
+                    if cur_dir == 0:
                         cur_pos[1] -= 1
-                    elif cur_dir == 1:  # West
+                    elif cur_dir == 1:
                         cur_pos[0] -= 1
-                    elif cur_dir == 2:  # North
+                    elif cur_dir == 2:
                         cur_pos[1] += 1
-                    else:  # East
+                    else:
                         cur_pos[0] += 1
                 elif instr == 'L':
-                    # Turn the racecar 90 degrees to the left
                     cur_dir = (cur_dir - 1) % 4
                 elif instr == 'R':
-                    # Turn the racecar 90 degrees to the right
                     cur_dir = (cur_dir + 1) % 4
-
-            # Check if the racecar has returned to the starting point
             if cur_pos[0] == initial_pos[0] and cur_pos[1] == initial_pos[1] and cur_dir == 2:
                 return True
 
